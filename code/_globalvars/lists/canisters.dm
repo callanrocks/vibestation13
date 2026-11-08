@@ -24,6 +24,11 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		GAS_PROTO_NITRATE = /obj/machinery/portable_atmospherics/canister/proto_nitrate,
 		GAS_ZAUKER = /obj/machinery/portable_atmospherics/canister/zauker,
 		GAS_HELIUM = /obj/machinery/portable_atmospherics/canister/helium,
+		GAS_NEON = /obj/machinery/portable_atmospherics/canister/neon,
+		GAS_ARGON = /obj/machinery/portable_atmospherics/canister/argon,
+		GAS_KRYPTON = /obj/machinery/portable_atmospherics/canister/krypton,
+		GAS_XENON = /obj/machinery/portable_atmospherics/canister/xenon,
+		GAS_RADON = /obj/machinery/portable_atmospherics/canister/radon,
 		GAS_ANTINOBLIUM = /obj/machinery/portable_atmospherics/canister/antinoblium,
 		GAS_HALON = /obj/machinery/portable_atmospherics/canister/halon,
 	))

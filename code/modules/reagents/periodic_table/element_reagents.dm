@@ -16,11 +16,23 @@
  * reshape the existing random pools.
  */
 
+/// Releases a puff of atmos gas onto a turf: one mole per 20 units of reagent, at the reagent's temperature.
+/proc/element_gas_spill(turf/open/exposed_turf, gas_id, reac_volume, datum/reagents/holder)
+	if(!gas_id || !istype(exposed_turf))
+		return
+	exposed_turf.atmos_spawn_air("[gas_id]=[reac_volume / 20];[TURF_TEMPERATURE(holder ? holder.chem_temp : T20C)]")
+
 /datum/reagent/element
 	abstract_type = /datum/reagent/element
 	taste_description = "metal"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_NO_RANDOM
+	/// The id of the atmos gas this releases when spilled on a turf, if it has one (GAS_HELIUM and so on).
+	var/gas_id
+
+/datum/reagent/element/expose_turf(turf/open/exposed_turf, reac_volume)
+	. = ..()
+	element_gas_spill(exposed_turf, gas_id, reac_volume, holder)
 
 /datum/reagent/toxin/element
 	abstract_type = /datum/reagent/toxin/element
@@ -35,17 +47,19 @@
 	material = null
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 	randomized_spawns = REAGENT_SPAWN_NO_RANDOM
+	/// The id of the atmos gas this releases when spilled on a turf, if it has one (only radon does).
+	var/gas_id
+
+/datum/reagent/uranium/element/expose_turf(turf/open/exposed_turf, reac_volume)
+	. = ..()
+	element_gas_spill(exposed_turf, gas_id, reac_volume, holder)
 
 /datum/reagent/element/helium
 	name = "Helium"
+	gas_id = GAS_HELIUM
 	description = "A colourless, odourless noble gas lighter than air. Mostly wasted on party balloons."
 	color = "#FFE9C9"
 	taste_mult = 0
-
-/datum/reagent/element/helium/expose_turf(turf/open/exposed_turf, reac_volume)
-	. = ..()
-	if(istype(exposed_turf))
-		exposed_turf.atmos_spawn_air("[GAS_HELIUM]=[reac_volume/20];[TURF_TEMPERATURE(holder ? holder.chem_temp : T20C)]")
 
 /datum/reagent/toxin/element/beryllium
 	name = "Beryllium"
@@ -62,6 +76,7 @@
 
 /datum/reagent/element/neon
 	name = "Neon"
+	gas_id = GAS_NEON
 	description = "An inert noble gas that glows a vivid red-orange under current. The signage industry thanks it."
 	color = "#FF4B2B"
 	taste_mult = 0
@@ -74,6 +89,7 @@
 
 /datum/reagent/element/argon
 	name = "Argon"
+	gas_id = GAS_ARGON
 	description = "A colourless, inert noble gas. Makes up nearly one percent of a planetary atmosphere and is used to shield welds."
 	color = "#C9B4E6"
 	taste_mult = 0
@@ -162,6 +178,7 @@
 
 /datum/reagent/element/krypton
 	name = "Krypton"
+	gas_id = GAS_KRYPTON
 	description = "A colourless, inert noble gas that glows a whitish blue in discharge lamps. No relation to any superhero's home world."
 	color = "#E6F2FF"
 	taste_mult = 0
@@ -263,6 +280,7 @@
 
 /datum/reagent/element/xenon
 	name = "Xenon"
+	gas_id = GAS_XENON
 	description = "A dense, colourless noble gas used in bright arc lamps, ion thrusters and anaesthesia."
 	color = "#B8D4FF"
 	taste_mult = 0
@@ -438,6 +456,7 @@
 
 /datum/reagent/uranium/element/radon
 	name = "Radon"
+	gas_id = GAS_RADON
 	description = "A colourless, odourless, radioactive noble gas that collects in basements and maintenance tunnels."
 	color = "#E0E8FF"
 	taste_mult = 0

@@ -91,6 +91,11 @@
 	var/tritium_irradiation_probability_min = 10
 	var/tritium_irradiation_probability_max = 60
 
+	var/radon_irradiation_moles_min = 1
+	var/radon_irradiation_moles_max = 20
+	var/radon_irradiation_probability_min = 5
+	var/radon_irradiation_probability_max = 40
+
 	var/antinoblium_irradiation_moles_min = 0.5
 	var/antinoblium_irradiation_moles_max = 30
 	var/antinoblium_irradiation_probability_min = 5
@@ -155,6 +160,7 @@
 	add_gas_reaction(/datum/gas/nitrous_oxide, while_present = PROC_REF(too_much_n2o), on_loss = PROC_REF(safe_n2o))
 	add_gas_reaction(/datum/gas/nitrium, while_present = PROC_REF(too_much_nitrium))
 	add_gas_reaction(/datum/gas/tritium, while_present = PROC_REF(too_much_tritium))
+	add_gas_reaction(/datum/gas/radon, while_present = PROC_REF(too_much_radon))
 	add_gas_reaction(/datum/gas/zauker, while_present = PROC_REF(too_much_zauker))
 	add_gas_reaction(/datum/gas/antinoblium, while_present = PROC_REF(too_much_antinoblium))
 
@@ -611,6 +617,15 @@
 	breather.adjust_organ_loss(ORGAN_SLOT_LUNGS, clamp(antinoblium_pp * 1, MIN_TOXIC_GAS_LUNG_DAMAGE, MAX_TOXIC_GAS_LUNG_DAMAGE))
 	if(prob(antinoblium_pp))
 		to_chat(breather, span_alert("You feel a burning sensation in your chest"))
+
+/// Radioactive noble gas. Gentler than tritium: it never poisons or scars the lungs, it just irradiates you.
+/obj/item/organ/lungs/proc/too_much_radon(mob/living/carbon/breather, datum/gas_mixture/breath, radon_pp, old_radon_pp)
+	breathe_gas_volume(breath, /datum/gas/radon)
+	if((radon_pp > radon_irradiation_moles_min) && SSradiation.can_irradiate_basic(breather))
+		var/lerp_scale = min(radon_irradiation_moles_max, radon_pp - radon_irradiation_moles_min) / (radon_irradiation_moles_max - radon_irradiation_moles_min)
+		var/chance = LERP(radon_irradiation_probability_min, radon_irradiation_probability_max, lerp_scale)
+		if(prob(chance))
+			breather.AddComponent(/datum/component/irradiated)
 
 /// Really toxic stuff, very much trying to kill you
 /obj/item/organ/lungs/proc/too_much_zauker(mob/living/carbon/breather, datum/gas_mixture/breath, zauker_pp, old_zauker_pp)
