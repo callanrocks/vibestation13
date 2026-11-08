@@ -204,6 +204,51 @@
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#9b5d7f#368bff"
 
+/obj/machinery/portable_atmospherics/canister/neon
+	name = "\improper Neon canister"
+	gas_type = /datum/gas/neon
+	filled = 1
+	icon_state = "/obj/machinery/portable_atmospherics/canister/neon"
+	post_init_icon_state = ""
+	greyscale_config = /datum/greyscale_config/canister/double_stripe
+	greyscale_colors = "#e8622c#fff1d6"
+
+/obj/machinery/portable_atmospherics/canister/argon
+	name = "\improper Argon canister"
+	gas_type = /datum/gas/argon
+	filled = 1
+	icon_state = "/obj/machinery/portable_atmospherics/canister/argon"
+	post_init_icon_state = ""
+	greyscale_config = /datum/greyscale_config/canister/double_stripe
+	greyscale_colors = "#7d5fd1#d9ccff"
+
+/obj/machinery/portable_atmospherics/canister/krypton
+	name = "\improper Krypton canister"
+	gas_type = /datum/gas/krypton
+	filled = 1
+	icon_state = "/obj/machinery/portable_atmospherics/canister/krypton"
+	post_init_icon_state = ""
+	greyscale_config = /datum/greyscale_config/canister/double_stripe
+	greyscale_colors = "#cfd8e6#4f6f93"
+
+/obj/machinery/portable_atmospherics/canister/xenon
+	name = "\improper Xenon canister"
+	gas_type = /datum/gas/xenon
+	filled = 1
+	icon_state = "/obj/machinery/portable_atmospherics/canister/xenon"
+	post_init_icon_state = ""
+	greyscale_config = /datum/greyscale_config/canister/double_stripe
+	greyscale_colors = "#6aa7ff#1d3fa0"
+
+/obj/machinery/portable_atmospherics/canister/radon
+	name = "\improper Radon canister"
+	gas_type = /datum/gas/radon
+	filled = 1
+	icon_state = "/obj/machinery/portable_atmospherics/canister/radon"
+	post_init_icon_state = ""
+	greyscale_config = /datum/greyscale_config/canister/double_stripe
+	greyscale_colors = "#2f3b2a#8ee04a"
+
 /obj/machinery/portable_atmospherics/canister/hydrogen
 	name = "\improper Hydrogen canister"
 	gas_type = /datum/gas/hydrogen
