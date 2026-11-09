@@ -37,7 +37,7 @@
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 
-	ai_controller = /datum/ai_controller/basic_controller/simple/simple_hostile
+	ai_controller = /datum/ai_controller/basic_controller/scorpion
 
 /mob/living/basic/scorpion/Initialize(mapload)
 	. = ..()
@@ -45,6 +45,32 @@
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SNAKE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	AddElement(/datum/element/venomous, /datum/reagent/toxin, SCORPION_VENOM_DOSE)
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
+/// Signal proc for [COMSIG_ATOM_ENTERED]. Anything that walks onto us gets stung: it is added to our retaliate list, same as if it had hit us.
+/mob/living/basic/scorpion/proc/on_entered(datum/source, atom/movable/entered)
+	SIGNAL_HANDLER
+
+	if(!isliving(entered) || entered == src || stat != STABLE)
+		return
+	var/mob/living/stepper = entered
+	if(stepper.incorporeal_move || (stepper.movement_type & (FLYING|FLOATING)) || faction_check_atom(stepper))
+		return
+	to_chat(stepper, span_warning("You step on [src]!"))
+	ai_controller?.set_blackboard_key_assoc_lazylist(BB_BASIC_MOB_RETALIATE_LIST, stepper, world.time)
+
+/// Passive like the snake: wanders, and only goes after whatever stepped on it or attacked it.
+/datum/ai_controller/basic_controller/scorpion
+	behavior_tree_json = "code/modules/mob/living/basic/scorpion/scorpion.bt.json"
+	blackboard = list(
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
+	)
+
+	ai_traits = DEFAULT_AI_FLAGS | STOP_MOVING_WHEN_PULLED
+	ai_movement = /datum/ai_movement/basic_avoidance
 
 #undef SCORPION_SPRITE_SCALE
 #undef SCORPION_VENOM_DOSE
