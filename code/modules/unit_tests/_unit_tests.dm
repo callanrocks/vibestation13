@@ -246,6 +246,7 @@
 #include "make_vegan_wellington.dm"
 #include "map_landmarks.dm"
 #include "mammoth.dm"
+#include "scorpion.dm"
 #include "mapload_space_verification.dm"
 #include "mapping.dm"
 #include "mapping_nearstation_test.dm"
