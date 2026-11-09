@@ -5673,6 +5673,7 @@
 #include "code\modules\mob\living\basic\ruin_defender\wizard\wizard.dm"
 #include "code\modules\mob\living\basic\ruin_defender\wizard\wizard_ai.dm"
 #include "code\modules\mob\living\basic\ruin_defender\wizard\wizard_spells.dm"
+#include "code\modules\mob\living\basic\scorpion\scorpion.dm"
 #include "code\modules\mob\living\basic\slime\actions.dm"
 #include "code\modules\mob\living\basic\slime\death.dm"
 #include "code\modules\mob\living\basic\slime\defense.dm"
