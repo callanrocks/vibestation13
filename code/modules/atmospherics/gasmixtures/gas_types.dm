@@ -302,6 +302,47 @@
 		Commonly known for being lighter than air and its ability to raise voice pitch when inhaled."
 	primary_color = "#f0f8ff"
 
+/datum/gas/neon
+	id = GAS_NEON
+	specific_heat = 15
+	name = "Neon"
+	rarity = 40
+	desc = "An inert noble gas that glows red-orange when electrified. Lighter than air, heavier than helium."
+	primary_color = "#ff6347"
+
+/datum/gas/argon
+	id = GAS_ARGON
+	specific_heat = 15
+	name = "Argon"
+	rarity = 80
+	desc = "An inert noble gas, heavier than air. It does nothing by itself, but it displaces the oxygen you need."
+	primary_color = "#7b68ee"
+
+/datum/gas/krypton
+	id = GAS_KRYPTON
+	specific_heat = 15
+	name = "Krypton"
+	rarity = 20
+	desc = "A rare, dense and inert noble gas. Used in high-end lighting and lasers."
+	primary_color = "#dcdcdc"
+
+/datum/gas/xenon
+	id = GAS_XENON
+	specific_heat = 15
+	name = "Xenon"
+	rarity = 10
+	desc = "A very dense, very rare and inert noble gas. Used in arc lamps and ion thrusters."
+	primary_color = "#6495ed"
+
+/datum/gas/radon
+	id = GAS_RADON
+	specific_heat = 15
+	name = "Radon"
+	rarity = 5
+	cargo_flags = GAS_DANGEROUS
+	desc = "A dense, radioactive noble gas that pools in enclosed spaces. Breathing it will irradiate you."
+	primary_color = "#6b8e23"
+
 /datum/gas/antinoblium
 	id = GAS_ANTINOBLIUM
 	specific_heat = 1

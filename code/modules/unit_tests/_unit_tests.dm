@@ -271,6 +271,7 @@
 #include "mutant_hands_consistency.dm"
 #include "mutant_organs.dm"
 #include "neurine_trauma_cleanup.dm"
+#include "noble_gases.dm"
 #include "novaflower_burn.dm"
 #include "nuke_cinematic.dm"
 #include "omnitools.dm"

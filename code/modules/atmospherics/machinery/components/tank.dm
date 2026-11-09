@@ -545,6 +545,26 @@
 	gas_type = /datum/gas/helium
 	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
+/obj/machinery/atmospherics/components/tank/neon
+	gas_type = /datum/gas/neon
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
+
+/obj/machinery/atmospherics/components/tank/argon
+	gas_type = /datum/gas/argon
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
+
+/obj/machinery/atmospherics/components/tank/krypton
+	gas_type = /datum/gas/krypton
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
+
+/obj/machinery/atmospherics/components/tank/xenon
+	gas_type = /datum/gas/xenon
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
+
+/obj/machinery/atmospherics/components/tank/radon
+	gas_type = /datum/gas/radon
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
+
 /obj/machinery/atmospherics/components/tank/antinoblium
 	gas_type = /datum/gas/antinoblium
 	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
