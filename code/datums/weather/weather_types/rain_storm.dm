@@ -146,6 +146,12 @@
 	probability = 0 // shouldn't spawn normally
 	weather_flags = (WEATHER_TURFS | WEATHER_MOBS | WEATHER_INDOORS | WEATHER_BAROMETER)
 
+/// Keep the existing magical rain pools, excluding abstract reagents and the new periodic-table families.
+/proc/get_wizard_rain_reagent_candidates(datum/reagent/reagent_type, include_parent = FALSE)
+	var/static/list/excluded_reagents = get_abstract_types() | typesof(/datum/reagent/element) | typesof(/datum/reagent/toxin/element) | typesof(/datum/reagent/uranium/element)
+	var/list/candidates = include_parent ? typesof(reagent_type) : subtypesof(reagent_type)
+	return candidates - excluded_reagents
+
 /datum/weather/particle/rain_storm/wizard/New(z_levels, list/weather_data)
 	if(length(GLOB.wizard_rain_reagents)) // the wizard event has already been run once and setup the whitelist
 		whitelist_weather_reagents = GLOB.wizard_rain_reagents
@@ -167,7 +173,7 @@
 	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent/impurity))
 	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent/drug))
 	GLOB.wizard_rain_reagents |= pick(typesof(/datum/reagent/glitter/random))
-	GLOB.wizard_rain_reagents |= pick(typesof(/datum/reagent/uranium))
+	GLOB.wizard_rain_reagents |= pick(get_wizard_rain_reagent_candidates(/datum/reagent/uranium, include_parent = TRUE))
 	GLOB.wizard_rain_reagents |= pick(typesof(/datum/reagent/luminescent_fluid))
 	GLOB.wizard_rain_reagents |= pick(typesof(/datum/reagent/carpet))
 	GLOB.wizard_rain_reagents |= pick(typesof(/datum/reagent/water))
@@ -187,7 +193,7 @@
 		/datum/reagent/toxin/acid/fluacid,
 		/datum/reagent/toxin/acid/nitracid,
 		// include a random toxin
-		pick(subtypesof(/datum/reagent/toxin)),
+		pick(get_wizard_rain_reagent_candidates(/datum/reagent/toxin)),
 	)
 	GLOB.wizard_rain_reagents |= allowed_toxins
 
@@ -232,9 +238,9 @@
 	GLOB.wizard_rain_reagents |= allowed_exotic_reagents
 
 	// add a few randomized reagents not listed above so they at least have a chance
-	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent))
-	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent))
-	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent))
+	GLOB.wizard_rain_reagents |= pick(get_wizard_rain_reagent_candidates(/datum/reagent))
+	GLOB.wizard_rain_reagents |= pick(get_wizard_rain_reagent_candidates(/datum/reagent))
+	GLOB.wizard_rain_reagents |= pick(get_wizard_rain_reagent_candidates(/datum/reagent))
 
 	whitelist_weather_reagents = GLOB.wizard_rain_reagents
 	return ..()
