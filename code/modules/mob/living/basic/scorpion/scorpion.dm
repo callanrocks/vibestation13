@@ -50,7 +50,7 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
-/// Signal proc for [COMSIG_ATOM_ENTERED]. Anything that walks onto us gets stung: it is added to our retaliate list, same as if it had hit us.
+/// Signal proc for [COMSIG_ATOM_ENTERED]. Anything that walks onto us is stung at once, unless it wears thick (THICKMATERIAL) boots, and is added to our retaliate list so we follow up.
 /mob/living/basic/scorpion/proc/on_entered(datum/source, atom/movable/entered)
 	SIGNAL_HANDLER
 
@@ -59,8 +59,13 @@
 	var/mob/living/stepper = entered
 	if(stepper.incorporeal_move || (stepper.movement_type & (FLYING|FLOATING)) || faction_check_atom(stepper))
 		return
+	var/obj/item/clothing/shoes/boots = stepper.get_item_by_slot(ITEM_SLOT_FEET)
+	if(istype(boots) && (boots.clothing_flags & THICKMATERIAL))
+		to_chat(stepper, span_notice("You step on [src], but your thick boots keep its sting out!"))
+		return
 	to_chat(stepper, span_warning("You step on [src]!"))
 	ai_controller?.set_blackboard_key_assoc_lazylist(BB_BASIC_MOB_RETALIATE_LIST, stepper, world.time)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/basic, melee_attack), stepper, null, TRUE)
 
 /// Passive like the snake: wanders, and only goes after whatever stepped on it or attacked it.
 /datum/ai_controller/basic_controller/scorpion
