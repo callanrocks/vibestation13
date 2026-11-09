@@ -45,7 +45,7 @@
 /obj/machinery/plumbing/synthesizer/Initialize(mapload, layer)
 	. = ..()
 	AddComponent(/datum/component/plumbing/simple_supply, layer)
-	dispensable_reagents = default_reagents
+	dispensable_reagents = default_reagents | get_chem_dispenser_elements()
 
 /obj/machinery/plumbing/synthesizer/process(seconds_per_tick)
 	if(!is_operational || !reagent_id || !amount)
