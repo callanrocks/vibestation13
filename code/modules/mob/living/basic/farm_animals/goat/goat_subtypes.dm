@@ -2,6 +2,12 @@
 	name = "Pete"
 	gender = MALE
 
+/mob/living/basic/goat/pete/Initialize(mapload)
+	. = ..()
+	if(mapload)
+		// A mammoth shares Pete's spot, so there is one on the station every round.
+		new /mob/living/basic/mammoth(drop_location())
+
 /mob/living/basic/goat/pete/examine()
 	. = ..()
 	var/area/goat_area = get_area(src)
