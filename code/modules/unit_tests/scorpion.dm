@@ -24,6 +24,8 @@
 	victim.forceMove(scorpion.loc)
 	sleep(1)
 	TEST_ASSERT(!victim.reagents.has_reagent(/datum/reagent/toxin), "A human in thick boots was injected with toxin by a scorpion.")
+	var/list/retaliate_list = scorpion.ai_controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST]
+	TEST_ASSERT(LAZYACCESS(retaliate_list, victim), "A scorpion stepped on by someone in thick boots did not add them to its retaliate list.")
 
 /// A dead scorpion does nothing when stepped on.
 /datum/unit_test/scorpion_dead_no_sting

@@ -59,12 +59,12 @@
 	var/mob/living/stepper = entered
 	if(stepper.incorporeal_move || (stepper.movement_type & (FLYING|FLOATING)) || faction_check_atom(stepper))
 		return
+	ai_controller?.set_blackboard_key_assoc_lazylist(BB_BASIC_MOB_RETALIATE_LIST, stepper, world.time)
 	var/obj/item/clothing/shoes/boots = stepper.get_item_by_slot(ITEM_SLOT_FEET)
 	if(istype(boots) && (boots.clothing_flags & THICKMATERIAL))
 		to_chat(stepper, span_notice("You step on [src], but your thick boots keep its sting out!"))
 		return
 	to_chat(stepper, span_warning("You step on [src]!"))
-	ai_controller?.set_blackboard_key_assoc_lazylist(BB_BASIC_MOB_RETALIATE_LIST, stepper, world.time)
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/basic, melee_attack), stepper, null, TRUE)
 
 /// Passive like the snake: wanders, and only goes after whatever stepped on it or attacked it.
