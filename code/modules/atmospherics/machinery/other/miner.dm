@@ -240,6 +240,31 @@
 	overlay_color = "#022e00"
 	spawn_id = /datum/gas/helium
 
+/obj/machinery/atmospherics/miner/neon
+	name = "\improper Neon Gas Miner"
+	overlay_color = "#ff6347"
+	spawn_id = /datum/gas/neon
+
+/obj/machinery/atmospherics/miner/argon
+	name = "\improper Argon Gas Miner"
+	overlay_color = "#7b68ee"
+	spawn_id = /datum/gas/argon
+
+/obj/machinery/atmospherics/miner/krypton
+	name = "\improper Krypton Gas Miner"
+	overlay_color = "#dcdcdc"
+	spawn_id = /datum/gas/krypton
+
+/obj/machinery/atmospherics/miner/xenon
+	name = "\improper Xenon Gas Miner"
+	overlay_color = "#6495ed"
+	spawn_id = /datum/gas/xenon
+
+/obj/machinery/atmospherics/miner/radon
+	name = "\improper Radon Gas Miner"
+	overlay_color = "#6b8e23"
+	spawn_id = /datum/gas/radon
+
 /obj/machinery/atmospherics/miner/antinoblium
 	name = "\improper Antinoblium Gas Miner"
 	overlay_color = "#022e00"
