@@ -108,7 +108,7 @@
 
 /mob/living/basic/mammoth/Life(seconds_per_tick = SSMOBS_DT)
 	. = ..()
-	if(stat != CONSCIOUS || grabbing || (world.time > last_ate + MAMMOTH_FED_WINDOW))
+	if(stat != STABLE || grabbing || (world.time > last_ate + MAMMOTH_FED_WINDOW))
 		return
 	if(!COOLDOWN_FINISHED(src, happy_trumpet_cooldown) || !isnull(ai_controller?.blackboard[BB_CURRENT_TARGET]))
 		return
@@ -172,7 +172,7 @@
 
 /// Grabs only fight-back targets that are alive, adjacent, not another mammoth, and only when off cooldown.
 /mob/living/basic/mammoth/proc/can_trunk_grab(mob/living/target)
-	if(grabbing || stat != CONSCIOUS || !COOLDOWN_FINISHED(src, grab_cooldown))
+	if(grabbing || stat != STABLE || !COOLDOWN_FINISHED(src, grab_cooldown))
 		return FALSE
 	if(target.stat == DEAD || istype(target, /mob/living/basic/mammoth) || target.anchored)
 		return FALSE
@@ -180,7 +180,7 @@
 
 /// Whether the hold is still going: both alive, still adjacent, and the target has not broken free.
 /mob/living/basic/mammoth/proc/trunk_hold_valid(mob/living/target)
-	if(QDELETED(src) || QDELETED(target) || stat != CONSCIOUS || target.stat == DEAD)
+	if(QDELETED(src) || QDELETED(target) || stat != STABLE || target.stat == DEAD)
 		return FALSE
 	if(HAS_TRAIT(src, TRAIT_INCAPACITATED) || pulling != target)
 		return FALSE
