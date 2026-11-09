@@ -26,14 +26,14 @@
 
 	faction = list(FACTION_HOSTILE)
 	mob_biotypes = MOB_ORGANIC | MOB_BUG
-	mob_size = MOB_SIZE_SMALL
+	mob_size = MOB_SIZE_TINY
 	pass_flags = PASSTABLE | PASSMOB
 	density = FALSE
 
-	health = 25
-	maxHealth = 25
-	melee_damage_lower = 3
-	melee_damage_upper = 6
+	health = 5
+	maxHealth = 5
+	melee_damage_lower = 1
+	melee_damage_upper = 1
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 
