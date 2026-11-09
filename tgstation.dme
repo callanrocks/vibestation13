@@ -6433,6 +6433,7 @@
 #include "code\modules\reagents\periodic_table\_periodic_table.dm"
 #include "code\modules\reagents\periodic_table\element_reactions.dm"
 #include "code\modules\reagents\periodic_table\element_reagents.dm"
+#include "code\modules\reagents\periodic_table\emitter_fuel.dm"
 #include "code\modules\reagents\reagent_containers\applicator.dm"
 #include "code\modules\reagents\reagent_containers\blood_pack.dm"
 #include "code\modules\reagents\reagent_containers\chem_pack.dm"

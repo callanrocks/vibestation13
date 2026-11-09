@@ -126,6 +126,8 @@
 	if(!in_range(user, src) && !isobserver(user))
 		return
 
+	. += get_fuel_examine()
+
 	if(!active)
 		. += span_notice("Its status display is currently turned off.")
 	else if(!powered)
@@ -145,7 +147,13 @@
 		log_game("[src] deleted at [AREACOORD(T)].")
 		investigate_log("deleted at [AREACOORD(T)].", INVESTIGATE_ENGINE)
 	QDEL_NULL(sparks)
+	QDEL_NULL(fuel_beaker)
 	return ..()
+
+/obj/machinery/power/emitter/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == fuel_beaker)
+		fuel_beaker = null
 
 /obj/machinery/power/emitter/update_overlays()
 	. = ..()
@@ -203,6 +211,16 @@
 	if(. && !anchored)
 		step(src, get_dir(user, src))
 
+/obj/machinery/power/emitter/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(!fuel_beaker || !user.can_perform_action(src, ALLOW_SILICON_REACH | FORBID_TELEKINESIS_REACH))
+		return
+	replace_fuel_beaker(user)
+	balloon_alert(user, "fuel removed")
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 /obj/machinery/power/emitter/attack_ai_secondary(mob/user, list/modifiers)
 	togglelock(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -257,6 +275,7 @@
 		sparks.start()
 	projectile.firer = user ? user : src
 	projectile.fired_from = src
+	burn_element_fuel(projectile)
 	if(last_projectile_params)
 		projectile.p_x = last_projectile_params[2]
 		projectile.p_y = last_projectile_params[3]
@@ -356,6 +375,9 @@
 	if(tool.GetID())
 		togglelock(user)
 		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/reagent_containers) && tool.is_open_container())
+		return try_load_fuel(user, tool)
 
 	if(!panel_open)
 		return NONE
