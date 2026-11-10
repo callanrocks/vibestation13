@@ -103,6 +103,7 @@
 // BEGIN_INCLUDE
 #include "aas_configs.dm"
 #include "abductor_baton_spell.dm"
+#include "abductor_chem_gland.dm"
 #include "ablative_hud.dm"
 #include "achievements.dm"
 #include "alerts.dm"

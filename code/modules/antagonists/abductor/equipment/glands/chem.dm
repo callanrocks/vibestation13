@@ -12,7 +12,11 @@
 	. = ..()
 	if(!LAZYLEN(possible_reagents))
 		LAZYINITLIST(possible_reagents)
-		for(var/reagent_path in subtypesof(/datum/reagent/drug) + subtypesof(/datum/reagent/medicine) + typesof(/datum/reagent/toxin))
+		var/list/candidates = subtypesof(/datum/reagent/drug) + subtypesof(/datum/reagent/medicine) + typesof(/datum/reagent/toxin)
+		// vibestation13: skip abstract parents (they can't be added to a holder) and the periodic-table toxins
+		candidates -= get_abstract_types()
+		candidates -= typesof(/datum/reagent/toxin/element)
+		for(var/reagent_path in candidates)
 			possible_reagents += reagent_path
 
 /obj/item/organ/heart/gland/chem/activate()
