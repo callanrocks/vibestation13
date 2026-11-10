@@ -34,6 +34,14 @@
 	// Helium, neon, argon, krypton, xenon and radon
 	TEST_ASSERT_EQUAL(checked, 6, "Wrong number of noble gas elements checked")
 
+	// Spilled radon becomes gas only: no glowing deposit to scoop up and spill again
+	for(var/obj/effect/decal/cleanable/greenglow/glow in floor)
+		qdel(glow)
+	var/datum/reagent/radon = GLOB.chemical_reagents_list[/datum/reagent/uranium/element/radon]
+	radon.expose_turf(floor, 20)
+	var/obj/effect/decal/cleanable/greenglow/radon_glow = locate() in floor
+	TEST_ASSERT_NULL(radon_glow, "Spilling radon left a recoverable deposit behind")
+
 	// Breathing radon irradiates you
 	var/mob/living/carbon/human/lab_rat = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/organ/lungs/test_lungs = allocate(/obj/item/organ/lungs)
