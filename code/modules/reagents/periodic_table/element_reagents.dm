@@ -457,6 +457,8 @@
 /datum/reagent/uranium/element/radon
 	name = "Radon"
 	gas_id = GAS_RADON
+	// Turns into gas when spilled, so no deposit to scoop back up and spill again
+	leaves_deposit = FALSE
 	description = "A colourless, odourless, radioactive noble gas that collects in basements and maintenance tunnels."
 	color = "#E0E8FF"
 	taste_mult = 0

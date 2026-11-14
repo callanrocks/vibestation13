@@ -37,18 +37,16 @@ GLOBAL_LIST_INIT(periodic_table, init_periodic_table())
 
 /// Returns the element a reagent represents, or null if it isn't an element.
 /proc/get_periodic_element(datum/reagent/reagent)
+	// Assoc list of reagent typepath to its element, built on first use
+	var/static/list/elements_by_reagent
+	if(isnull(elements_by_reagent))
+		elements_by_reagent = list()
+		for(var/datum/periodic_element/element as anything in GLOB.periodic_table)
+			elements_by_reagent[element.reagent_type] = element
 	var/reagent_type = ispath(reagent) ? reagent : reagent?.type
-	for(var/datum/periodic_element/element as anything in GLOB.periodic_table)
-		if(element.reagent_type == reagent_type)
-			return element
-	return null
-
-/// Returns the reagent typepaths of all 118 elements, in atomic order.
-/proc/get_periodic_table_reagents()
-	var/list/reagent_types = list()
-	for(var/datum/periodic_element/element as anything in GLOB.periodic_table)
-		reagent_types += element.reagent_type
-	return reagent_types
+	if(isnull(reagent_type))
+		return null
+	return elements_by_reagent[reagent_type]
 
 /// Returns TRUE if this element was added by the periodic table module rather than by upstream.
 /datum/periodic_element/proc/is_new_element()

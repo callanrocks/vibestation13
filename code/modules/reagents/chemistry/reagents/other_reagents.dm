@@ -1266,6 +1266,8 @@
 	var/tox_damage = 0.25
 	/// How radioactive is this reagent
 	var/rad_power = 1
+	/// vibestation13: whether spilling this leaves a scoopable glowing deposit. Gases such as radon turn into atmos gas instead.
+	var/leaves_deposit = TRUE
 
 /datum/reagent/uranium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -1316,7 +1318,7 @@
 
 /datum/reagent/uranium/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
-	if((reac_volume < 3) || isspaceturf(exposed_turf))
+	if(!leaves_deposit || (reac_volume < 3) || isspaceturf(exposed_turf))
 		return
 
 	var/obj/effect/decal/cleanable/greenglow/glow = exposed_turf.spawn_unique_cleanable(/obj/effect/decal/cleanable/greenglow)
